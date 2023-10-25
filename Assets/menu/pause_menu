@@ -1,0 +1,91 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PauseMenu : MonoBehaviour
+{
+    public GameObject pauseMenu;
+    public bool IsPaused;
+    public int SaveFile; // Change the variable name
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        pauseMenu.SetActive(false);
+        IsPaused = false;
+
+        // Load saved data when the game starts
+        LoadGame();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (IsPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+    }
+
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true); //it will pause the game
+        Time.timeScale = 0f;
+        IsPaused = true;
+
+        // it will Save the game when paused
+        SaveGame();
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false); //press "esc" again to continue playing
+        Time.timeScale = 1f;
+        IsPaused = false;
+    }
+
+    public void SaveGame()
+    {
+        // Create a data structure to hold game data
+        GameData data = new GameData();
+        data.SaveFile = SaveFile; // Change the variable name
+
+        // Convert data to JSON and save it, all save data will be json 
+        string json = JsonUtility.ToJson(data);
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/savedGame.json", json);
+    }
+
+    public void LoadGame()
+    {
+        string path = Application.persistentDataPath + "/savedGame.json";
+        if (System.IO.File.Exists(path))
+        {
+            // Load the data and apply it to the game
+            string json = System.IO.File.ReadAllText(path);
+            GameData data = JsonUtility.FromJson<GameData>(json);
+            SaveFile = data.SaveFile; // Change the variable name
+        }
+    }
+
+    // Data structure for saving and loading game data
+    [System.Serializable]
+    public class GameData
+    {
+        public int SaveFile; // Change the variable name
+    }
+}
+
+
+
+
+
+
+
+
+

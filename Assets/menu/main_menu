@@ -1,0 +1,76 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Menu : MonoBehaviour
+{
+    public GameObject settingsMenu; // Reference to the settings menu UI object
+    public GameObject saveMenu;
+    public GameObject audioSettingPanel;
+    
+    private void Start()
+    {
+        // Ensure the settings menu is initially hidden
+        settingsMenu.SetActive(false);
+        saveMenu.SetActive(false);
+        //it will hide panels because this is the start menu
+        audioSettingPanel.SetActive(false); 
+    }
+
+        public void OpenSaveMenu()
+        {
+            saveMenu.SetActive(true); //it will show the save menu
+        }
+
+        public void CloseSaveMenu()
+        {
+            saveMenu.SetActive(false); //it will hide the save menu if not needed
+        }
+            public void SaveGame()
+            {
+                // leave it alone for now
+            }
+            public void LoadGame()
+            {
+            // leave it alone for now
+            }
+        
+        public void OnPlayButton()
+        {
+            SceneManager.LoadScene("GameScene");
+        }
+
+                public void OpenSettings()
+                {
+                    settingsMenu.SetActive(true); // Show the settings menu
+                    audioSettingPanel.SetActive(false);
+                }
+                    public void OpenAudioSettings()
+                    {
+                        audioSettingPanel.SetActive(true); // it will  display the audio setting
+                    }
+
+                public void CloseSettings()
+                {
+                    settingsMenu.SetActive(false); // Hide the settings menu
+                    audioSettingPanel.SetActive(false); //it will hide the audio setting
+                }
+
+        
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
+
+         public void BackToMainMenu()
+         {
+            SceneManager.LoadScene("MainMenuScene");
+         }
+
+        public void Credits()
+        {
+            SceneManager.LoadScene("CreditScene");
+        }
+    }
+
+
+
